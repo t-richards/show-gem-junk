@@ -11,6 +11,6 @@ module Show
   end
 end
 
-require 'activesupport'
+require 'active_support/all'
 require 'show/gem/junk/rubygem'
 require 'show/gem/junk/gemfile'

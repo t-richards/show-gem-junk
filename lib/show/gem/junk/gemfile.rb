@@ -2,15 +2,15 @@
 
 # GemFile is a file that belongs to a rubygem
 class Show::Gem::Junk::GemFile
-  attr_accessor :path, :info
+  attr_accessor :path, :stat
 
   def initialize(path)
     @path = path
-    @info = File.info(path)
+    @stat = File.stat(path)
   end
 
   def size
-    info.size
+    stat.size
   end
 
   def pretty_path
@@ -29,11 +29,10 @@ class Show::Gem::Junk::GemFile
     return true if basename == '.appveyor.yml'
 
     # Loose path matching
-    return true if path.includes?('concourse')
+    return true if path.include?('concourse')
 
     # Test and spec should be at top level
-    trimmed_path = path.lchop(GEMS_DIR)
-    parts = Path.new(trimmed_path).parts
+    parts = Pathname.new(pretty_path).parts
     return false if parts.size < 2
     return true if parts[1] == '/spec'
     return true if parts[1] == '/test'
