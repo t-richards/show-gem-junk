@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'show/gem/junk'
+
+HOME_DIR = ENV.fetch('HOME')
+
+def try_fetch_gem_home
+  ENV.fetch('GEM_HOME')
+rescue KeyError
+  export_line = "export GEM_HOME=#{HOME_DIR}/.gem/ruby/2.6.0".colorize.bright
+  warn <<-MSG
+  #{'ERROR:'.colorize.red.bright}
+    This tool requires the $GEM_HOME environment variable to be set.
+    You do not have a value for $GEM_HOME.
+
+    Before running this tool, please set your $GEM_HOME.
+    For example:
+
+      #{export_line}
+
+  MSG
+  exit 1
+end
+
+GEMS_DIR  = File.join(try_fetch_gem_home, '/gems/')
+COL_WIDTH = 10
+
+gems = Dir.glob(GEMS_DIR + '*').map { |g| Gem.new(g) }.sort.reverse
+max_gem_name_len = gems.map { |g| g.name.size }.max || 0
+
+# Header
+puts [
+  'Gem Name'.ljust(max_gem_name_len),
+  'Version'.rjust(COL_WIDTH),
+  'Size'.rjust(COL_WIDTH),
+  'Junk'.rjust(COL_WIDTH),
+  '% Junk'.rjust(COL_WIDTH)
+].join(' ').colorize.bright
+
+# Rows
+gems.each do |g|
+  next if g.junk_files.empty?
+
+  puts [
+    g.name.ljust(max_gem_name_len),
+    g.version.rjust(COL_WIDTH),
+    g.size.humanize_bytes.rjust(COL_WIDTH),
+    g.junk_size.humanize_bytes.rjust(COL_WIDTH),
+    g.percent_junk.round(2).to_s.rjust(COL_WIDTH)
+  ].join(' ')
+end
+
+# Total
+total_junk = gems.map(&:junk_size).sum
+puts
+puts "Grand total size of junk: #{total_junk.humanize_bytes}"

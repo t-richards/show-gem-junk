@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'bin/rubocop'
+
+Metrics:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false

@@ -1,0 +1,50 @@
+PATH
+  remote: .
+  specs:
+    show-gem-junk (0.1.0)
+      activesupport (~> 5.2.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (5.2.3)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    ast (2.4.0)
+    concurrent-ruby (1.1.5)
+    i18n (1.6.0)
+      concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.2)
+    minitest (5.11.3)
+    parallel (1.17.0)
+    parser (2.6.3.0)
+      ast (~> 2.4.0)
+    rainbow (3.0.0)
+    rake (10.5.0)
+    rubocop (0.71.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.6)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
+    thread_safe (0.3.6)
+    tzinfo (1.2.5)
+      thread_safe (~> 0.1)
+    unicode-display_width (1.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 2.0)
+  minitest (~> 5.0)
+  rake (~> 10.0)
+  rubocop
+  show-gem-junk!
+
+BUNDLED WITH
+   2.0.2

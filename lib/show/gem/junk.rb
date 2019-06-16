@@ -10,3 +10,7 @@ module Show
     end
   end
 end
+
+require 'activesupport'
+require 'show/gem/junk/rubygem'
+require 'show/gem/junk/gemfile'
