@@ -31,7 +31,9 @@ end
 GEMS_DIR  = File.join(try_fetch_gem_home, '/gems/')
 COL_WIDTH = 10
 
-gems = Dir.glob(GEMS_DIR + '*').map { |g| Show::Gem::Junk::RubyGem.new(g) }.sort.reverse
+gems = Dir.glob(GEMS_DIR + '*').map do |gem|
+  Show::Gem::Junk::RubyGem.new(gem)
+end.sort.reverse
 max_gem_name_len = gems.map { |g| g.name.size }.max || 0
 
 # Header

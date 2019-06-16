@@ -1,9 +1,9 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - 'bin/rubocop'
-
-Metrics:
-  Enabled: false
+    - 'bin/rake'
 
 Style/ClassAndModuleChildren:
   Enabled: false

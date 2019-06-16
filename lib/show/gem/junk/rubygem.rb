@@ -6,7 +6,9 @@ class Show::Gem::Junk::RubyGem
 
   def initialize(path)
     @name, _, @version = path.gsub(GEMS_DIR, '').rpartition('-')
-    @files = Dir.glob("#{GEMS_DIR}#{name}-#{version}/**/*").map { |f| Show::Gem::Junk::GemFile.new(f) }
+    @files = Dir.glob("#{GEMS_DIR}#{name}-#{version}/**/*").map do |f|
+      Show::Gem::Junk::GemFile.new(f)
+    end
   end
 
   def junk_files
