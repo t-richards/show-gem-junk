@@ -3,6 +3,7 @@ PATH
   specs:
     show-gem-junk (0.1.0)
       activesupport (~> 5.2.3)
+      colorator (~> 1.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -13,6 +14,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     ast (2.4.0)
+    colorator (1.1.0)
     concurrent-ruby (1.1.5)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
