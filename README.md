@@ -12,16 +12,40 @@ $ gem install show-gem-junk
 
 ## Usage
 
-Display a table of junk in your gems:
+Display a compact table of gems by junk size:
 
 ```bash
 $ show-gem-junk
+
+Gem Name                Version       Size       Junk     % Junk
+crass                     1.0.4     636 KB     556 KB      87.45
+tzinfo                    1.2.5     891 KB     613 KB      68.74
 ```
 
-List files (coming soon)
+Display each gem separately, with a table of junk files by size:
 
 ```bash
 $ show-gem-junk -v
+
+Gem Name: crass
+Version:  1.0.4
+Path:     /home/tom/.gem/ruby/2.6.0/gems/crass-1.0.4
+Size:     636 KB
+Junk:     556 KB
+% Junk:   87.45
+
+Junk File                                                          Size
+crass-1.0.4/test/css-parsing-tests/color3_hsl.json               199 KB
+crass-1.0.4/test/support/serialization/bootstrap.css             117 KB
+crass-1.0.4/test/support/serialization/animate.css              71.2 KB
+crass-1.0.4/test/support/serialization/pure.css                 34.8 KB
+crass-1.0.4/test/css-parsing-tests/color3_keywords.json         22.8 KB
+crass-1.0.4/test/shared/parse_rules.rb                          17.1 KB
+crass-1.0.4/test/support/serialization/bootstrap-theme.css      16.4 KB
+crass-1.0.4/test/css-parsing-tests/component_value_list.json      14 KB
+crass-1.0.4/test/test_parse_properties.rb                       12.1 KB
+crass-1.0.4/test/css-parsing-tests/README.rst                   9.15 KB
+crass-1.0.4/test/css-parsing-tests/make_color3_keywords.py      6.73 KB
 ```
 
 ## Development
