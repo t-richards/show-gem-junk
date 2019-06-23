@@ -33,11 +33,12 @@ class Show::Gem::Junk::GemFile
     # Loose path matching
     return true if path.include?('concourse')
 
-    # Test and spec should be at top level
+    # Specs
     parts = Pathname.new(pretty_path).each_filename.to_a
     return false if parts.size < 2
-    return true if parts[1] == 'spec'
     return true if parts[1] == 'test'
+    return true if parts[1] == 'spec'
+    return true if parts[1] == 'features'
 
     false
   end
