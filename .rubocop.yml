@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - 'bin/rubocop'
     - 'bin/rake'
+    - 'vendor/**/*'
 
 Style/ClassAndModuleChildren:
   Enabled: false
