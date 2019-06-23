@@ -2,9 +2,10 @@
 
 # RubyGem is an unpacked gem on disk
 class Show::Gem::Junk::RubyGem
-  attr_accessor :name, :version, :files
+  attr_accessor :name, :path, :version, :files
 
   def initialize(path)
+    @path = File.expand_path(path)
     @name, _, @version = path.gsub(GEMS_DIR, '').rpartition('-')
     @files = Dir.glob("#{GEMS_DIR}#{name}-#{version}/**/*").map do |f|
       Show::Gem::Junk::GemFile.new(f)
@@ -31,9 +32,5 @@ class Show::Gem::Junk::RubyGem
 
   def <=>(other)
     percent_junk <=> other.percent_junk
-  end
-
-  def pretty_junk_files
-    junk_files.map(&:pretty_path)
   end
 end

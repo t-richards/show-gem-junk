@@ -19,6 +19,10 @@ class Show::Gem::Junk::GemFile
     path.gsub(GEMS_DIR, '')
   end
 
+  def <=>(other)
+    size <=> other.size
+  end
+
   def junk?
     return false if File.directory?(path)
 

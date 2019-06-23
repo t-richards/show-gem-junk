@@ -7,8 +7,10 @@ require 'show/gem/junk'
 require 'active_support'
 require 'active_support/core_ext/numeric/conversions'
 require 'colorator'
+require 'optparse'
 
-HOME_DIR = ENV.fetch('HOME')
+HOME_DIR = ENV.fetch('HOME', '~')
+COL_WIDTH = 10
 
 def try_fetch_gem_home
   ENV.fetch('GEM_HOME')
@@ -28,37 +30,92 @@ rescue KeyError
   exit 1
 end
 
-GEMS_DIR  = File.join(try_fetch_gem_home, '/gems/')
-COL_WIDTH = 10
+GEMS_DIR = File.join(try_fetch_gem_home, '/gems/')
 
-gems = Dir.glob(GEMS_DIR + '*').map do |gem|
-  Show::Gem::Junk::RubyGem.new(gem)
-end.sort.reverse
-max_gem_name_len = gems.map { |g| g.name.size }.max || 0
+def main
+  # Parse options
+  options = {}
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
 
-# Header
-puts [
-  'Gem Name'.ljust(max_gem_name_len),
-  'Version'.rjust(COL_WIDTH),
-  'Size'.rjust(COL_WIDTH),
-  'Junk'.rjust(COL_WIDTH),
-  '% Junk'.rjust(COL_WIDTH)
-].join(' ').bold
+    opts.on('-v', '--[no-]verbose', 'Print verbose list of files') do |v|
+      options[:verbose] = v
+    end
+  end.parse!
 
-# Rows
-gems.each do |g|
-  next if g.junk_files.empty?
+  # Collect gems
+  gems = Dir.glob(GEMS_DIR + '*').map do |gem|
+    Show::Gem::Junk::RubyGem.new(gem)
+  end
+  gems = gems.reject { |g| g.junk_files.empty? }.sort.reverse
 
-  puts [
-    g.name.ljust(max_gem_name_len),
-    g.version.rjust(COL_WIDTH),
-    g.size.to_s(:human_size).rjust(COL_WIDTH),
-    g.junk_size.to_s(:human_size).rjust(COL_WIDTH),
-    g.percent_junk.round(2).to_s.rjust(COL_WIDTH)
-  ].join(' ')
+  # Print results
+  if options[:verbose]
+    print_verbose(gems)
+  else
+    print_table(gems)
+  end
+
+  print_total(gems)
 end
 
-# Total
-total_junk = gems.map(&:junk_size).sum
-puts
-puts "Grand total size of junk: #{total_junk.to_s(:human_size)}"
+def print_table(gems)
+  max_gem_name_len = gems.map { |g| g.name.size }.max || 0
+
+  # Header
+  puts
+  puts [
+    'Gem Name'.ljust(max_gem_name_len),
+    'Version'.rjust(COL_WIDTH),
+    'Size'.rjust(COL_WIDTH),
+    'Junk'.rjust(COL_WIDTH),
+    '% Junk'.rjust(COL_WIDTH)
+  ].join(' ').bold
+
+  # Rows
+  gems.each do |gem|
+    puts [
+      gem.name.ljust(max_gem_name_len),
+      gem.version.rjust(COL_WIDTH),
+      gem.size.to_s(:human_size).rjust(COL_WIDTH),
+      gem.junk_size.to_s(:human_size).rjust(COL_WIDTH),
+      gem.percent_junk.round(2).to_s.rjust(COL_WIDTH)
+    ].join(' ')
+  end
+end
+
+def print_verbose(gems)
+  gems.each do |gem|
+    puts
+    puts 'Gem Name: '.bold + gem.name
+    puts 'Version:  '.bold + gem.version
+    puts 'Path:     '.bold + gem.path
+    puts 'Size:     '.bold + gem.size.to_s(:human_size)
+    puts 'Junk:     '.bold + gem.junk_size.to_s(:human_size)
+    puts '% Junk:   '.bold + gem.percent_junk.round(2).to_s
+    puts
+
+    max_junk_name_len = gem.junk_files.map { |g| g.pretty_path.size }.max || 0
+    puts [
+      'Junk File'.ljust(max_junk_name_len),
+      'Size'.rjust(COL_WIDTH)
+    ].join(' ').bold
+
+    gem.junk_files.sort.reverse.each do |file|
+      puts [
+        file.pretty_path.ljust(max_junk_name_len),
+        file.size.to_s(:human_size).rjust(COL_WIDTH)
+      ].join(' ')
+    end
+    puts
+    puts '=' * 80
+  end
+end
+
+def print_total(gems)
+  total_junk = gems.map(&:junk_size).sum
+  puts
+  puts "Grand total size of junk: #{total_junk.to_s(:human_size)}"
+end
+
+main
