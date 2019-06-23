@@ -48,6 +48,24 @@ crass-1.0.4/test/css-parsing-tests/README.rst                   9.15 KB
 crass-1.0.4/test/css-parsing-tests/make_color3_keywords.py      6.73 KB
 ```
 
+## What is a junk file?
+
+This tool considers the following gem contents to be "junk":
+
+### Files
+
+ - `.gemspec`
+ - `.gitignore`
+ - `.travis.yml`
+ - `.appveyor.yml`
+
+### Directories
+
+ - `test`
+ - `spec`
+ - `features`
+ - `concourse`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
