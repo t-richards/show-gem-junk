@@ -12,6 +12,13 @@ $ gem install show-gem-junk
 
 ## Usage
 
+First and most important step!
+
+```bash
+# Set your GEM_HOME if you don't have one already.
+export GEM_HOME=/home/tom/.gem/ruby/2.6.0
+```
+
 Display a compact table of gems by junk size:
 
 ```bash
