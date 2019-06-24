@@ -7,7 +7,7 @@ class Show::Gem::Junk::RubyGem
   def initialize(path)
     @path = File.expand_path(path)
     @name, _, @version = path.gsub(GEMS_DIR, '').rpartition('-')
-    @files = Dir.glob("#{GEMS_DIR}#{name}-#{version}/**/*").map do |f|
+    @files = Dir.glob("#{GEMS_DIR}#{name}-#{version}/**/*", File::FNM_DOTMATCH).map do |f|
       Show::Gem::Junk::GemFile.new(f)
     end
   end
