@@ -2,21 +2,22 @@ PATH
   remote: .
   specs:
     show-gem-junk (1.0.0)
-      activesupport (~> 5.2.3)
+      activesupport (>= 5.2.3, < 6.1.0)
       colorator (~> 1.1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.3)
+    activesupport (6.0.3.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+      zeitwerk (~> 2.2, >= 2.2.2)
     ast (2.4.0)
     colorator (1.1.0)
-    concurrent-ruby (1.1.5)
-    i18n (1.6.0)
+    concurrent-ruby (1.1.6)
+    i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     minitest (5.11.3)
@@ -34,9 +35,10 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
     thread_safe (0.3.6)
-    tzinfo (1.2.5)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.0)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
