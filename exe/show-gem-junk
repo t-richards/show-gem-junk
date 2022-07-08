@@ -44,7 +44,7 @@ def main
   end.parse!
 
   # Collect gems
-  gems = Dir.glob(GEMS_DIR + '*').map do |gem|
+  gems = Dir.glob("#{GEMS_DIR}*").map do |gem|
     Show::Gem::Junk::RubyGem.new(gem)
   end
   gems = gems.reject { |g| g.junk_files.empty? }.sort.reverse
