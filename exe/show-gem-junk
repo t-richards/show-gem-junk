@@ -101,7 +101,7 @@ def print_verbose(gems)
       'Size'.rjust(COL_WIDTH)
     ].join(' ').bold
 
-    gem.junk_files.sort.reverse.each do |file|
+    gem.junk_files.sort.reverse_each do |file|
       puts [
         file.pretty_path.ljust(max_junk_name_len),
         file.size.to_s(:human_size).rjust(COL_WIDTH)
@@ -113,7 +113,7 @@ def print_verbose(gems)
 end
 
 def print_total(gems)
-  total_junk = gems.map(&:junk_size).sum
+  total_junk = gems.sum(&:junk_size)
   puts
   puts "Grand total size of junk: #{total_junk.to_s(:human_size)}"
 end

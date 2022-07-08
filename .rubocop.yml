@@ -1,12 +1,20 @@
+require:
+  - rubocop-rake
+  - rubocop-performance
+  - rubocop-minitest
 
 AllCops:
+  NewCops: enable
   Exclude:
     - 'bin/rubocop'
     - 'bin/rake'
     - 'vendor/**/*'
 
-Style/ClassAndModuleChildren:
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Metrics:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
   Enabled: false

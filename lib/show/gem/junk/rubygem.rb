@@ -17,11 +17,11 @@ class Show::Gem::Junk::RubyGem
   end
 
   def size
-    files.map(&:size).sum
+    files.sum(&:size)
   end
 
   def junk_size
-    junk_files.map(&:size).sum
+    junk_files.sum(&:size)
   end
 
   def percent_junk
