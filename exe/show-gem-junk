@@ -77,8 +77,8 @@ def print_table(gems)
     puts [
       gem.name.ljust(max_gem_name_len),
       gem.version.rjust(COL_WIDTH),
-      gem.size.to_s(:human_size).rjust(COL_WIDTH),
-      gem.junk_size.to_s(:human_size).rjust(COL_WIDTH),
+      gem.size.to_fs(:human_size).rjust(COL_WIDTH),
+      gem.junk_size.to_fs(:human_size).rjust(COL_WIDTH),
       gem.percent_junk.round(2).to_s.rjust(COL_WIDTH)
     ].join(' ')
   end
@@ -90,8 +90,8 @@ def print_verbose(gems)
     puts 'Gem Name: '.bold + gem.name
     puts 'Version:  '.bold + gem.version
     puts 'Path:     '.bold + gem.path
-    puts 'Size:     '.bold + gem.size.to_s(:human_size)
-    puts 'Junk:     '.bold + gem.junk_size.to_s(:human_size)
+    puts 'Size:     '.bold + gem.size.to_fs(:human_size)
+    puts 'Junk:     '.bold + gem.junk_size.to_fs(:human_size)
     puts '% Junk:   '.bold + gem.percent_junk.round(2).to_s
     puts
 
@@ -104,7 +104,7 @@ def print_verbose(gems)
     gem.junk_files.sort.reverse_each do |file|
       puts [
         file.pretty_path.ljust(max_junk_name_len),
-        file.size.to_s(:human_size).rjust(COL_WIDTH)
+        file.size.to_fs(:human_size).rjust(COL_WIDTH)
       ].join(' ')
     end
     puts
@@ -115,7 +115,7 @@ end
 def print_total(gems)
   total_junk = gems.sum(&:junk_size)
   puts
-  puts "Grand total size of junk: #{total_junk.to_s(:human_size)}"
+  puts "Grand total size of junk: #{total_junk.to_fs(:human_size)}"
 end
 
 main
